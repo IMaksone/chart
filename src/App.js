@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getDates } from "./components/datepicker/Datepicker";
+import { getDates } from "./components/datepicker/shared";
 import DatepickerBox from "./components/datepicker/DatepickerBox";
 import ChartBox from "./components/chart/ChartBox"
 
