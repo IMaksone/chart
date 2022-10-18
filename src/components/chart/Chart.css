@@ -1,0 +1,33 @@
+.tooltip {
+  position: absolute !important;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  padding: 0.3rem 0.5rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.tooltip .circle {
+  width: 8px;
+  min-width: 8px;
+  margin-right: 0.4rem;
+  margin-bottom: 3px;
+  height: 8px;
+  border-radius: 100%;
+}
+
+.tooltip div {
+  display: flex;
+  align-items: center;
+}
+
+.tooltip div span {
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.tooltip p {
+  margin: 0;
+  margin-left: 1.4rem;
+}
