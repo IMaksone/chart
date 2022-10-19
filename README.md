@@ -1,7 +1,3 @@
-Small project with virtualized graph and complex datepicker
-
-Stack: React, prop-types, D3.js, material-ui
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
