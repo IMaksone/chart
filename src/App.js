@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getDates } from "./components/datepicker/shared";
-import DatepickerBox from "./components/datepicker/DatepickerBox";
+import DatepickerBox from "./components/datepicker";
 import ChartBox from "./components/chart/ChartBox"
 
 const defaultState = {

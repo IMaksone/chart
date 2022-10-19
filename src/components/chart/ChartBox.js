@@ -6,7 +6,7 @@ const getData = () => {
 
   const today = new Date();
 
-  for (let i = 0; i < 1000000; i++) {
+  for (let i = 0; i < 100000; i++) {
     let date = new Date();
     date.setMinutes(today.getMinutes() - i * 5);
     arr.push({

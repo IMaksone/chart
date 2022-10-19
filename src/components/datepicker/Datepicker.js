@@ -5,8 +5,9 @@ import React, {
   useState,
   useMemo,
 } from "react";
+import propTypes from "prop-types";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Typography, Box, OutlinedInput, Paper } from "@material-ui/core";
+import { Typography, Box, OutlinedInput } from "@material-ui/core";
 
 import colors from "../../constants/colors.json";
 
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Datapicker({ value, setValue, preValue, setPreValue }) {
+export default function Datepicker({ value, setValue, preValue, setPreValue }) {
   const classes = useStyles();
 
   const [isActive, setIsActive] = useState("");
@@ -109,43 +110,51 @@ export default function Datapicker({ value, setValue, preValue, setPreValue }) {
     };
   });
 
-  const handleChange = useCallback((event) => {
-    const data = parseTitle(event.target.value);
-    setPreValue({
-      title: event.target.value,
-      dates: convertDates({ start: data.start, end: data.end }),
-      interval: getInterval(data.start, data.end),
-      type: "absolute",
-    });
-    setError(data.error);
-    setIsActive("default");
-  }, []);
+  const handleChange = useCallback(
+    (event) => {
+      const data = parseTitle(event.target.value);
+      setPreValue({
+        title: event.target.value,
+        dates: convertDates({ start: data.start, end: data.end }),
+        interval: getInterval(data.start, data.end),
+        type: "absolute",
+      });
+      setError(data.error);
+      setIsActive("default");
+    },
+    [setPreValue]
+  );
 
+  const onClick = () => (isActive ? "" : setIsActive("default"));
+
+  const inputName =
+    titleTimeFormat(
+      hoverValue.dates
+        ? getDates(hoverValue.dates)
+        : preValue.dates
+        ? getDates(preValue.dates)
+        : dates
+    ).type === "year"
+      ? "simple-datepicker-year"
+      : "simple-datepicker";
+
+  const inputValue = isActive
+    ? hoverValue.title || preValue.title || value.view || viewDate
+    : preValue.title || value.view || value.title || viewDate;
+
+  const iputProps = isActive ? { inputComponent: Mask } : {};
+  
   return (
     <Box ref={rootRef} className={classes.root}>
       <MyOutlinedInput
         id="simple-datepicker"
-        name={
-          titleTimeFormat(
-            hoverValue.dates
-              ? getDates(hoverValue.dates)
-              : preValue.dates
-              ? getDates(preValue.dates)
-              : dates
-          ).type === "year"
-            ? "simple-datepicker-year"
-            : "simple-datepicker"
-        }
+        name={inputName}
         error={error ? true : false}
-        value={
-          isActive
-            ? hoverValue.title || preValue.title || value.view || viewDate
-            : preValue.title || value.view || value.title || viewDate
-        }
+        value={inputValue}
         variant="outlined"
-        onClick={() => (isActive ? "" : setIsActive("default"))}
+        onClick={onClick}
         onChange={handleChange}
-        {...(isActive ? { inputComponent: Mask } : {})}
+        {...iputProps}
       />
       <Typography color="error" variant="caption" className={classes.errorText}>
         {error}
@@ -172,3 +181,25 @@ export default function Datapicker({ value, setValue, preValue, setPreValue }) {
     </Box>
   );
 }
+
+export const DatepickerDatesType = propTypes.object;
+
+export const DatepickerValueType = propTypes.oneOfType([
+  propTypes.shape({
+    start: propTypes.instanceOf(new Date()),
+    end: propTypes.instanceOf(new Date()),
+  }),
+  propTypes.shape({
+    title: propTypes.string,
+    interval: propTypes.string,
+    dates: DatepickerDatesType,
+    type: propTypes.oneOf(["relative", "absolute", "fixed", "unix"]),
+  }),
+]);
+
+Datepicker.propTypes = {
+  value: DatepickerValueType,
+  preValue: propTypes.oneOfType([DatepickerValueType, propTypes.object]),
+  setValue: propTypes.func,
+  setPreValue: propTypes.func,
+};

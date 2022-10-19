@@ -1,6 +1,6 @@
 import React from "react";
 import MaskedInput from "react-text-mask";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 
 const simpleMask = [
   /[A-Za-z]/,
@@ -106,7 +106,7 @@ function Mask(props) {
 }
 
 Mask.propTypes = {
-  inputRef: PropTypes.func.isRequired,
+  inputRef: propTypes.func.isRequired,
 };
 
 export default Mask;
