@@ -199,7 +199,7 @@ export default function LineChart(props) {
             .on("start", () => {
               if (
                 event.sourceEvent &&
-                event.sourceEvent.path.find((el) =>
+                event.sourceEvent.composedPath().find((el) =>
                   el.className && el.className.animVal === "x-axis"
                     ? true
                     : false

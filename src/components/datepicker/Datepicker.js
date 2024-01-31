@@ -96,7 +96,7 @@ export default function Datepicker({ value, setValue, preValue, setPreValue }) {
   const viewDate = titleTimeFormat(dates).title;
 
   const clickEvent = (e) => {
-    if (rootRef && !e.path.find((el) => el === rootRef.current) && isActive) {
+    if (rootRef && !e.composedPath().find((el) => el === rootRef.current) && isActive) {
       setIsActive("");
     }
   };
@@ -104,6 +104,7 @@ export default function Datepicker({ value, setValue, preValue, setPreValue }) {
   useEffect(() => {
     window.addEventListener("mousedown", clickEvent);
     window.addEventListener("click", clickEvent);
+
     return () => {
       window.removeEventListener("mousedown", clickEvent);
       window.removeEventListener("click", clickEvent);
